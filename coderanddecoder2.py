@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+import time as t
 
 root = tk.Tk()
 root.title('Coder and Decoder')
@@ -7,10 +8,13 @@ root.geometry('600x500')
 root.clipboard_append('Label')
 root.resizable(True ,True)
 
-for i in range (4):
+for i in range (5):
     for j in range (2):
         root.columnconfigure(j, weight=1)
         root.rowconfigure(i, weight=1)
+
+def hide_label():
+    sucsesful_copy['text']=''
 
 def code():
     coder = ent.get()
@@ -78,6 +82,8 @@ def code():
     txt.config(text=coder)
     root.clipboard_clear()  # Очистить буфер обмена
     root.clipboard_append(txt['text'])
+    sucsesful_copy['text'] = 'Sucsesfuly copied!'
+    sucsesful_copy.after(1000, hide_label)
 
 def decode():
     decoder = ent2.get()
@@ -143,6 +149,8 @@ def decode():
     eng_decoder = eng_decoder.replace(':','y')
     eng_decoder = eng_decoder.replace(';','z')
     txt2.config(text=f'{decoder} / {eng_decoder}')
+    sucsesful_copy['text'] = 'Sucsesfuly copied!'
+    sucsesful_copy.after(1000, hide_label)
     return decoder
 
 txt = tk.Label(text='code text:', font=('Impact', 20))
@@ -165,5 +173,8 @@ ex2.grid(row=2,column=1, sticky='nsew', padx=10, pady=10)
 
 disp_img = Label()
 disp_img.grid(row=3,column=0,columnspan=2)
+
+sucsesful_copy = tk.Label(text='', font=('Impact', 20))
+sucsesful_copy.grid(row=4,column=0,columnspan=2)
 
 root.mainloop()
